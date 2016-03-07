@@ -226,11 +226,11 @@ class RNNLM(NNBase):
         J = 0 # total loss
         ys = [init] # emitted sequence
         
-        hs = zeros((ns+1, self.hdim))
-        ps = zeros((ns, self.vdim))
+        hs = zeros((maxlen+1, self.hdim))
+        ps = zeros((maxlen, self.vdim))
         
         for w in range(maxlen):
-            z1 = self.params.H.dot(hs[w-1]) + self.params.L[ys[w]]
+            z1 = self.params.H.dot(hs[w-1]) + self.sparams.L[ys[w]]
             hs[w] = sigmoid(z1)
             z2 = self.params.U.dot(hs[w])
             ps = softmax(z2)            
